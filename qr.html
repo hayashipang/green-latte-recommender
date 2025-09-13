@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>手機連線 QR Code</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+        }
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        .url-box {
+            background: #f0f8ff;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            word-break: break-all;
+            font-family: monospace;
+        }
+        .qr-placeholder {
+            width: 200px;
+            height: 200px;
+            background: #f0f0f0;
+            border: 2px dashed #ccc;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+        }
+        .instructions {
+            text-align: left;
+            margin-top: 20px;
+        }
+        .instructions ol {
+            padding-left: 20px;
+        }
+        .instructions li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📱 手機連線 QR Code</h1>
+        
+        <div class="url-box">
+            <strong>網址：</strong><br>
+            http://192.168.68.101:8000/index.html
+        </div>
+        
+        <div class="qr-placeholder">
+            <div style="text-align: center;">
+                <div style="font-size: 24px; margin-bottom: 10px;">📱</div>
+                <div>請用手機掃描</div>
+                <div style="font-size: 12px; color: #666;">或手動輸入網址</div>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3>使用步驟：</h3>
+            <ol>
+                <li>確保手機和 Mac 連接到同一個 Wi-Fi 網路</li>
+                <li>在手機瀏覽器中輸入上方網址</li>
+                <li>或使用 QR Code 掃描器掃描（需要手動輸入網址）</li>
+                <li>開始使用綠拿鐵推薦小幫手！</li>
+            </ol>
+        </div>
+        
+        <p style="margin-top: 20px; color: #666;">
+            <strong>注意：</strong>Mac 和手機必須在同一個 Wi-Fi 網路下才能連線
+        </p>
+    </div>
+</body>
+</html>

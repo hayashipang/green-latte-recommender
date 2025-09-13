@@ -1,0 +1,318 @@
+const { useState } = React;
+
+function GreenLatteRecommender() {
+  const [taste, setTaste] = useState("");
+  const [scene, setScene] = useState("");
+  const [greenLevel, setGreenLevel] = useState("");
+  const [bloodSugar, setBloodSugar] = useState("");
+  const [fruitFlavor, setFruitFlavor] = useState("");
+  const [zodiac, setZodiac] = useState("");
+  const [result, setResult] = useState(null);
+  const [showWheel, setShowWheel] = useState(false);
+  const [wheelResult, setWheelResult] = useState(null);
+  const [isSpinning, setIsSpinning] = useState(false);
+
+  const handleSubmit = () => {
+    let recommendation = "";
+    let reason = "";
+    let fruitSuggestion = "";
+    let zodiacMessage = "";
+
+    // 星座幸運水果分析
+    if (zodiac) {
+      const zodiacFruitMap = {
+        "牡羊座": { lucky: "芒果", message: "芒果是你的幸運果！今天選擇芒果會為你帶來活力和好運氣。", nutrition: "維生素C含量高，口感香甜順滑。" },
+        "金牛座": { lucky: "火龍果", message: "火龍果是你的幸運果！今天選擇火龍果會為你帶來穩定和豐盛。", nutrition: "含有豐富的膳食纖維，有助於腸道健康。" },
+        "雙子座": { lucky: "奇異果", message: "奇異果是你的幸運果！今天選擇奇異果會為你帶來智慧和靈感。", nutrition: "維生素C之王，酸甜清爽。" },
+        "巨蟹座": { lucky: "藍莓", message: "藍莓是你的幸運果！今天選擇藍莓會為你帶來溫暖和保護。", nutrition: "富含抗氧化物質，有助於提升免疫力。" },
+        "獅子座": { lucky: "芒果", message: "芒果是你的幸運果！今天選擇芒果會為你帶來自信和魅力。", nutrition: "維生素C含量高，口感香甜順滑。" },
+        "處女座": { lucky: "奇異果", message: "奇異果是你的幸運果！今天選擇奇異果會為你帶來完美和健康。", nutrition: "維生素C之王，酸甜清爽。" },
+        "天秤座": { lucky: "火龍果", message: "火龍果是你的幸運果！今天選擇火龍果會為你帶來平衡和和諧。", nutrition: "含有豐富的膳食纖維，有助於腸道健康。" },
+        "天蠍座": { lucky: "藍莓", message: "藍莓是你的幸運果！今天選擇藍莓會為你帶來深度和轉化。", nutrition: "富含抗氧化物質，有助於提升免疫力。" },
+        "射手座": { lucky: "芒果", message: "芒果是你的幸運果！今天選擇芒果會為你帶來冒險和自由。", nutrition: "維生素C含量高，口感香甜順滑。" },
+        "摩羯座": { lucky: "火龍果", message: "火龍果是你的幸運果！今天選擇火龍果會為你帶來成功和成就。", nutrition: "含有豐富的膳食纖維，有助於腸道健康。" },
+        "水瓶座": { lucky: "奇異果", message: "奇異果是你的幸運果！今天選擇奇異果會為你帶來創新和獨特。", nutrition: "維生素C之王，酸甜清爽。" },
+        "雙魚座": { lucky: "藍莓", message: "藍莓是你的幸運果！今天選擇藍莓會為你帶來直覺和靈性。", nutrition: "富含抗氧化物質，有助於提升免疫力。" }
+      };
+
+      const zodiacInfo = zodiacFruitMap[zodiac];
+      if (zodiacInfo) {
+        fruitSuggestion = `搭配${zodiacInfo.lucky}，${zodiacInfo.nutrition}`;
+        zodiacMessage = `✨ ${zodiacInfo.message}`;
+      }
+    }
+
+    // 優先考慮血糖問題
+    if (bloodSugar === "有血糖問題") {
+      if (taste === "清爽" && greenLevel === "愛吃蔬菜" && !zodiac) {
+        recommendation = "100% 蔬菜系列（低糖版）";
+        reason = "專為血糖控制設計，以蔬菜為主，避免高糖水果，適合血糖管理的你。";
+      } else {
+        recommendation = "7:3 系列（低糖版）";
+        reason = "控制水果比例，選擇低升糖指數的蔬果，幫助穩定血糖。";
+      }
+    } else {
+      // 原有邏輯，但考慮星座水果選擇
+      if (taste === "清爽" && greenLevel === "愛吃蔬菜" && !zodiac) {
+        recommendation = "100% 蔬菜系列";
+        reason = "適合喜歡蔬菜感、想要清爽無負擔的你。";
+      } else if (taste === "均衡" || zodiac) {
+        recommendation = "7:3 系列";
+        reason = "蔬果兼具，營養與風味都平衡。";
+      } else if (taste === "甜美" || greenLevel === "怕青味") {
+        recommendation = "5:5 系列";
+        reason = "水果比例高，口感更甜美、容易入口。";
+      } else {
+        recommendation = "7:3 系列";
+        reason = "均衡安全，適合大部分情境。";
+      }
+    }
+
+    // 如果有選擇水果口味，加入水果建議
+    if (fruitSuggestion) {
+      reason += " " + fruitSuggestion;
+    }
+
+    // 加入星座訊息
+    if (zodiacMessage) {
+      reason += " " + zodiacMessage;
+    }
+
+    setResult({ recommendation, reason });
+  };
+
+  const spinWheel = () => {
+    if (isSpinning) return;
+    
+    setIsSpinning(true);
+    setWheelResult(null);
+    
+    // 轉盤獎品配置
+    const prizes = [
+      { name: "折5元", emoji: "💰", probability: 35 },
+      { name: "折2元", emoji: "💵", probability: 30 },
+      { name: "免費再來一罐", emoji: "🥤", probability: 20 },
+      { name: "下次再努力", emoji: "💪", probability: 15 }
+    ];
+    
+    // 模擬轉盤動畫
+    setTimeout(() => {
+      // 隨機選擇獎品
+      const random = Math.random() * 100;
+      let cumulativeProbability = 0;
+      let selectedPrize = prizes[0];
+      
+      for (let prize of prizes) {
+        cumulativeProbability += prize.probability;
+        if (random <= cumulativeProbability) {
+          selectedPrize = prize;
+          break;
+        }
+      }
+      
+      setWheelResult(selectedPrize);
+      setIsSpinning(false);
+    }, 2000);
+  };
+
+  return (
+    <div className="container">
+      <div className="header">
+        <h1>🥬 綠拿鐵推薦小幫手 🥤</h1>
+        <p className="subtitle">找到最適合你的綠拿鐵配方</p>
+      </div>
+
+      <div className="form-container">
+        {/* 問題 1 */}
+        <div className="question-group">
+          <label className="question-label">1. 你偏好的口味？</label>
+          <select
+            className="select-input"
+            value={taste}
+            onChange={(e) => setTaste(e.target.value)}
+          >
+            <option value="">請選擇</option>
+            <option value="清爽">清爽（偏蔬菜）</option>
+            <option value="均衡">均衡</option>
+            <option value="甜美">甜美（偏水果）</option>
+          </select>
+        </div>
+
+        {/* 問題 2 */}
+        <div className="question-group">
+          <label className="question-label">2. 主要飲用情境？</label>
+          <select
+            className="select-input"
+            value={scene}
+            onChange={(e) => setScene(e.target.value)}
+          >
+            <option value="">請選擇</option>
+            <option value="早餐">早餐代餐</option>
+            <option value="運動">運動後補充</option>
+            <option value="下午">下午享用</option>
+            <option value="晚餐">搭配晚餐</option>
+          </select>
+        </div>
+
+        {/* 問題 3 */}
+        <div className="question-group">
+          <label className="question-label">3. 你對蔬菜青味的接受度？</label>
+          <select
+            className="select-input"
+            value={greenLevel}
+            onChange={(e) => setGreenLevel(e.target.value)}
+          >
+            <option value="">請選擇</option>
+            <option value="愛吃蔬菜">愛吃蔬菜</option>
+            <option value="還好">還好，蔬果都可以</option>
+            <option value="怕青味">怕青味</option>
+          </select>
+        </div>
+
+        {/* 問題 4 */}
+        <div className="question-group">
+          <label className="question-label">4. 是否有血糖相關問題？</label>
+          <select
+            className="select-input"
+            value={bloodSugar}
+            onChange={(e) => setBloodSugar(e.target.value)}
+          >
+            <option value="">請選擇</option>
+            <option value="沒有血糖問題">沒有血糖問題</option>
+            <option value="有血糖問題">有血糖問題（糖尿病、血糖偏高）</option>
+          </select>
+        </div>
+
+        {/* 問題 5 */}
+        <div className="question-group">
+          <label className="question-label">5. 你的星座？</label>
+          <select
+            className="select-input"
+            value={zodiac}
+            onChange={(e) => setZodiac(e.target.value)}
+          >
+            <option value="">請選擇</option>
+            <option value="牡羊座">♈ 牡羊座 (3/21-4/19)</option>
+            <option value="金牛座">♉ 金牛座 (4/20-5/20)</option>
+            <option value="雙子座">♊ 雙子座 (5/21-6/20)</option>
+            <option value="巨蟹座">♋ 巨蟹座 (6/21-7/22)</option>
+            <option value="獅子座">♌ 獅子座 (7/23-8/22)</option>
+            <option value="處女座">♍ 處女座 (8/23-9/22)</option>
+            <option value="天秤座">♎ 天秤座 (9/23-10/22)</option>
+            <option value="天蠍座">♏ 天蠍座 (10/23-11/21)</option>
+            <option value="射手座">♐ 射手座 (11/22-12/21)</option>
+            <option value="摩羯座">♑ 摩羯座 (12/22-1/19)</option>
+            <option value="水瓶座">♒ 水瓶座 (1/20-2/18)</option>
+            <option value="雙魚座">♓ 雙魚座 (2/19-3/20)</option>
+          </select>
+        </div>
+
+        {/* 按鈕 */}
+        <button
+          onClick={handleSubmit}
+          className="submit-button"
+        >
+          🎯 取得推薦
+        </button>
+
+        {/* 結果 */}
+        {result && (
+          <div className="result-container">
+            <div className="result-header">
+              <h2>✨ 推薦結果</h2>
+            </div>
+            <div className="result-content">
+              <h3 className="recommendation">{result.recommendation}</h3>
+              <p className="reason">{result.reason}</p>
+              
+              {/* 分享按鈕 */}
+              <div className="share-section">
+                <button 
+                  className="share-button"
+                  onClick={() => {
+                    const shareText = `我剛剛用了綠拿鐵推薦小幫手，推薦我的是：${result.recommendation}！🥬✨`;
+                    if (navigator.share) {
+                      navigator.share({
+                        title: '綠拿鐵推薦小幫手',
+                        text: shareText,
+                        url: window.location.href
+                      });
+                    } else {
+                      navigator.clipboard.writeText(shareText + ' ' + window.location.href);
+                      alert('已複製到剪貼簿！');
+                    }
+                  }}
+                >
+                  📤 分享我的推薦
+                </button>
+              </div>
+
+              {/* 每日小貼士 */}
+              <div className="daily-tip">
+                <h4>💡 今日健康小貼士</h4>
+                <p>綠拿鐵最好在製作後30分鐘內飲用，以保持最佳營養價值！</p>
+              </div>
+
+              {/* 每日幸運轉盤 */}
+              <div className="wheel-section">
+                <h4>🎰 每日幸運轉盤</h4>
+                <p>完成推薦後，轉轉看你的幸運獎品！</p>
+                
+                <button 
+                  className={`wheel-button ${isSpinning ? 'spinning' : ''}`}
+                  onClick={spinWheel}
+                  disabled={isSpinning}
+                >
+                  {isSpinning ? '🎰 轉轉轉...' : '🎰 轉轉看'}
+                </button>
+
+                {wheelResult && (
+                  <div className="wheel-result">
+                    <div className="prize-display">
+                      <div className="prize-emoji">{wheelResult.emoji}</div>
+                      <div className="prize-name">{wheelResult.name}</div>
+                    </div>
+                    
+                    {wheelResult.name === "折5元" && (
+                      <div className="prize-details">
+                        <p>🎉 恭喜獲得折5元優惠！</p>
+                        <p>優惠碼：<strong>SAVE5</strong></p>
+                        <p>有效期：7天，單次使用</p>
+                      </div>
+                    )}
+                    
+                    {wheelResult.name === "折2元" && (
+                      <div className="prize-details">
+                        <p>🎉 恭喜獲得折2元優惠！</p>
+                        <p>優惠碼：<strong>SAVE2</strong></p>
+                        <p>有效期：7天，單次使用</p>
+                      </div>
+                    )}
+                    
+                    {wheelResult.name === "免費再來一罐" && (
+                      <div className="prize-details">
+                        <p>🎉 太幸運了！免費再來一罐！</p>
+                        <p>請到店出示此畫面兌換</p>
+                        <p>有效期：3天，單次使用</p>
+                      </div>
+                    )}
+                    
+                    {wheelResult.name === "下次再努力" && (
+                      <div className="prize-details">
+                        <p>💪 沒關係，明天再來試試！</p>
+                        <p>每天都有一次機會喔！</p>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// 渲染應用程式
+ReactDOM.render(<GreenLatteRecommender />, document.getElementById('root'));

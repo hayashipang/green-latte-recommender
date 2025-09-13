@@ -1,0 +1,28 @@
+{
+  "name": "green-latte-recommender",
+  "version": "1.0.0",
+  "description": "綠拿鐵推薦小幫手 - 根據個人喜好推薦最適合的綠拿鐵配方",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server . -p 3000 -o",
+    "dev": "npx live-server --port=3000 --open=/index.html"
+  },
+  "keywords": [
+    "green-smoothie",
+    "recommender",
+    "react",
+    "health",
+    "nutrition"
+  ],
+  "author": "GreenWin",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "live-server": "^1.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/green-latte-recommender.git"
+  },
+  "homepage": "https://your-username.github.io/green-latte-recommender"
+}
