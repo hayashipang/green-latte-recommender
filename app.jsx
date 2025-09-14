@@ -8,9 +8,6 @@ function GreenLatteRecommender() {
   const [fruitFlavor, setFruitFlavor] = useState("");
   const [zodiac, setZodiac] = useState("");
   const [result, setResult] = useState(null);
-  const [showWheel, setShowWheel] = useState(false);
-  const [wheelResult, setWheelResult] = useState(null);
-  const [isSpinning, setIsSpinning] = useState(false);
   const [loading, setLoading] = useState(false);
   const [fortuneData, setFortuneData] = useState(null);
   const [aiRecommendation, setAiRecommendation] = useState(null);
@@ -208,39 +205,6 @@ function GreenLatteRecommender() {
     setLoading(false);
   };
 
-  const spinWheel = () => {
-    if (isSpinning) return;
-    
-    setIsSpinning(true);
-    setWheelResult(null);
-    
-    // 轉盤獎品配置 (12格轉盤)
-    const prizes = [
-      { name: "折2元", emoji: "💵", probability: 50 },     // 6格
-      { name: "折3元", emoji: "💸", probability: 25 },     // 3格
-      { name: "折5元", emoji: "💰", probability: 16.67 },  // 2格
-      { name: "再送一瓶", emoji: "🥤", probability: 8.33 }  // 1格
-    ];
-    
-    // 模擬轉盤動畫
-    setTimeout(() => {
-      // 隨機選擇獎品
-      const random = Math.random() * 100;
-      let cumulativeProbability = 0;
-      let selectedPrize = prizes[0];
-      
-      for (let prize of prizes) {
-        cumulativeProbability += prize.probability;
-        if (random <= cumulativeProbability) {
-          selectedPrize = prize;
-          break;
-        }
-      }
-      
-      setWheelResult(selectedPrize);
-      setIsSpinning(false);
-    }, 2000);
-  };
 
   return (
     <div className="container">
@@ -400,129 +364,6 @@ function GreenLatteRecommender() {
           </div>
         )}
 
-        {/* 每日幸運轉盤 - 始終顯示 */}
-        <div className="wheel-section">
-          <h4>🎰 每日幸運轉盤</h4>
-          <p>轉轉看你的幸運獎品。</p>
-          
-          {/* 轉盤視覺組件 */}
-          <div className="wheel-container">
-            <div className={`wheel ${isSpinning ? 'spinning' : ''}`}>
-              {/* 使用SVG創建轉盤 */}
-              <svg width="300" height="300" viewBox="0 0 300 300">
-                {/* 12格扇形 - 加入邊界線 */}
-                <g transform="translate(150,150)">
-                  {/* 折2元 - 6格 */}
-                  <g>
-                    <path d="M 0 0 L 0 -120 A 120 120 0 0 1 60 -103.92 Z" fill="#4CAF50" stroke="#333" strokeWidth="2" />
-                    <text x="0" y="-80" textAnchor="middle" fill="#FF0000" fontSize="11" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折2元</text>
-                  </g>
-                  <g>
-                    <path d="M 0 0 L 60 -103.92 A 120 120 0 0 1 103.92 -60 Z" fill="#4CAF50" stroke="#333" strokeWidth="2" />
-                    <text x="80" y="-50" textAnchor="middle" fill="#FF0000" fontSize="11" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折2元</text>
-                  </g>
-                  <g>
-                    <path d="M 0 0 L 103.92 -60 A 120 120 0 0 1 120 0 Z" fill="#4CAF50" stroke="#333" strokeWidth="2" />
-                    <text x="100" y="0" textAnchor="middle" fill="#FF0000" fontSize="11" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折2元</text>
-                  </g>
-                  <g>
-                    <path d="M 0 0 L 120 0 A 120 120 0 0 1 103.92 60 Z" fill="#4CAF50" stroke="#333" strokeWidth="2" />
-                    <text x="80" y="50" textAnchor="middle" fill="#FF0000" fontSize="11" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折2元</text>
-                  </g>
-                  <g>
-                    <path d="M 0 0 L 103.92 60 A 120 120 0 0 1 60 103.92 Z" fill="#4CAF50" stroke="#333" strokeWidth="2" />
-                    <text x="0" y="80" textAnchor="middle" fill="#FF0000" fontSize="11" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折2元</text>
-                  </g>
-                  <g>
-                    <path d="M 0 0 L 60 103.92 A 120 120 0 0 1 0 120 Z" fill="#4CAF50" stroke="#333" strokeWidth="2" />
-                    <text x="-80" y="50" textAnchor="middle" fill="#FF0000" fontSize="11" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折2元</text>
-                  </g>
-                  
-                  {/* 折3元 - 3格 */}
-                  <g>
-                    <path d="M 0 0 L 0 120 A 120 120 0 0 1 -60 103.92 Z" fill="#2196F3" stroke="#333" strokeWidth="2" />
-                    <text x="-80" y="0" textAnchor="middle" fill="#FF0000" fontSize="11" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折3元</text>
-                  </g>
-                  <g>
-                    <path d="M 0 0 L -60 103.92 A 120 120 0 0 1 -103.92 60 Z" fill="#2196F3" stroke="#333" strokeWidth="2" />
-                    <text x="-100" y="-20" textAnchor="middle" fill="#FF0000" fontSize="11" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折3元</text>
-                  </g>
-                  <g>
-                    <path d="M 0 0 L -103.92 60 A 120 120 0 0 1 -120 0 Z" fill="#2196F3" stroke="#333" strokeWidth="2" />
-                    <text x="-100" y="-50" textAnchor="middle" fill="#FF0000" fontSize="11" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折3元</text>
-                  </g>
-                  
-                  {/* 折5元 - 2格 */}
-                  <g>
-                    <path d="M 0 0 L -120 0 A 120 120 0 0 1 -103.92 -60 Z" fill="#FF9800" stroke="#333" strokeWidth="2" />
-                    <text x="-100" y="-80" textAnchor="middle" fill="#FF0000" fontSize="11" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折5元</text>
-                  </g>
-                  <g>
-                    <path d="M 0 0 L -103.92 -60 A 120 120 0 0 1 -60 -103.92 Z" fill="#FF9800" stroke="#333" strokeWidth="2" />
-                    <text x="-80" y="-100" textAnchor="middle" fill="#FF0000" fontSize="11" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折5元</text>
-                  </g>
-                  
-                  {/* 再送一瓶 - 1格 */}
-                  <g>
-                    <path d="M 0 0 L -60 -103.92 A 120 120 0 0 1 0 -120 Z" fill="#F44336" stroke="#333" strokeWidth="2" />
-                    <text x="0" y="-100" textAnchor="middle" fill="#FF0000" fontSize="9" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">再送一瓶</text>
-                  </g>
-                </g>
-              </svg>
-            </div>
-            <div className="wheel-pointer"></div>
-          </div>
-          
-          <button 
-            className={`wheel-button ${isSpinning ? 'spinning' : ''}`}
-            onClick={spinWheel}
-            disabled={isSpinning}
-          >
-            {isSpinning ? '🎰 轉轉轉...' : '🎰 轉轉看'}
-          </button>
-
-          {wheelResult && (
-            <div className="wheel-result">
-              <div className="prize-display">
-                <div className="prize-emoji">{wheelResult.emoji}</div>
-                <div className="prize-name">{wheelResult.name}</div>
-              </div>
-              
-              {wheelResult.name === "折2元" && (
-                <div className="prize-details">
-                  <p>🎉 恭喜獲得折2元優惠！</p>
-                  <p>優惠碼：<strong>SAVE2</strong></p>
-                  <p>有效期限：當天，單次使用</p>
-                </div>
-              )}
-              
-              {wheelResult.name === "折3元" && (
-                <div className="prize-details">
-                  <p>🎉 恭喜獲得折3元優惠！</p>
-                  <p>優惠碼：<strong>SAVE3</strong></p>
-                  <p>有效期限：當天，單次使用</p>
-                </div>
-              )}
-              
-              {wheelResult.name === "折5元" && (
-                <div className="prize-details">
-                  <p>🎉 恭喜獲得折5元優惠！</p>
-                  <p>優惠碼：<strong>SAVE5</strong></p>
-                  <p>有效期限：當天，單次使用</p>
-                </div>
-              )}
-              
-              {wheelResult.name === "再送一瓶" && (
-                <div className="prize-details">
-                  <p>🎉 太幸運了！再送一瓶！</p>
-                  <p>請到店出示此畫面兌換</p>
-                  <p>有效期限：當天，單次使用</p>
-                </div>
-              )}
-              
-            </div>
-          )}
-        </div>
       </div>
     </div>
   );
