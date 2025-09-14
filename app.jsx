@@ -214,11 +214,11 @@ function GreenLatteRecommender() {
     setIsSpinning(true);
     setWheelResult(null);
     
-    // 轉盤獎品配置
+    // 轉盤獎品配置 (12格轉盤)
     const prizes = [
-      { name: "折5元", emoji: "💰", probability: 45 },
-      { name: "折2元", emoji: "💵", probability: 35 },
-      { name: "免費再來一罐", emoji: "🥤", probability: 20 }
+      { name: "折2元", emoji: "💵", probability: 66.67 }, // 8格
+      { name: "折5元", emoji: "💰", probability: 25 },     // 3格
+      { name: "再送一瓶", emoji: "🥤", probability: 8.33 }  // 1格
     ];
     
     // 模擬轉盤動畫
@@ -433,9 +433,9 @@ function GreenLatteRecommender() {
                       </div>
                     )}
                     
-                    {wheelResult.name === "免費再來一罐" && (
+                    {wheelResult.name === "再送一瓶" && (
                       <div className="prize-details">
-                        <p>🎉 太幸運了！免費再來一罐！</p>
+                        <p>🎉 太幸運了！再送一瓶！</p>
                         <p>請到店出示此畫面兌換</p>
                         <p>有效期限：當天，單次使用</p>
                       </div>
