@@ -216,8 +216,9 @@ function GreenLatteRecommender() {
     
     // 轉盤獎品配置 (12格轉盤)
     const prizes = [
-      { name: "折2元", emoji: "💵", probability: 66.67 }, // 8格
-      { name: "折5元", emoji: "💰", probability: 25 },     // 3格
+      { name: "折2元", emoji: "💵", probability: 50 },     // 6格
+      { name: "折3元", emoji: "💸", probability: 25 },     // 3格
+      { name: "折5元", emoji: "💰", probability: 16.67 },  // 2格
       { name: "再送一瓶", emoji: "🥤", probability: 8.33 }  // 1格
     ];
     
@@ -411,37 +412,39 @@ function GreenLatteRecommender() {
               <svg width="300" height="300" viewBox="0 0 300 300">
                 {/* 12格扇形 */}
                 <g transform="translate(150,150)">
-                  {/* 折2元 - 8格 */}
+                  {/* 折2元 - 6格 */}
                   <path d="M 0 0 L 0 -120 A 120 120 0 0 1 60 -103.92 Z" fill="#4CAF50" />
                   <path d="M 0 0 L 60 -103.92 A 120 120 0 0 1 103.92 -60 Z" fill="#4CAF50" />
                   <path d="M 0 0 L 103.92 -60 A 120 120 0 0 1 120 0 Z" fill="#4CAF50" />
                   <path d="M 0 0 L 120 0 A 120 120 0 0 1 103.92 60 Z" fill="#4CAF50" />
                   <path d="M 0 0 L 103.92 60 A 120 120 0 0 1 60 103.92 Z" fill="#4CAF50" />
                   <path d="M 0 0 L 60 103.92 A 120 120 0 0 1 0 120 Z" fill="#4CAF50" />
-                  <path d="M 0 0 L 0 120 A 120 120 0 0 1 -60 103.92 Z" fill="#4CAF50" />
-                  <path d="M 0 0 L -60 103.92 A 120 120 0 0 1 -103.92 60 Z" fill="#4CAF50" />
                   
-                  {/* 折5元 - 3格 */}
-                  <path d="M 0 0 L -103.92 60 A 120 120 0 0 1 -120 0 Z" fill="#FF9800" />
+                  {/* 折3元 - 3格 */}
+                  <path d="M 0 0 L 0 120 A 120 120 0 0 1 -60 103.92 Z" fill="#2196F3" />
+                  <path d="M 0 0 L -60 103.92 A 120 120 0 0 1 -103.92 60 Z" fill="#2196F3" />
+                  <path d="M 0 0 L -103.92 60 A 120 120 0 0 1 -120 0 Z" fill="#2196F3" />
+                  
+                  {/* 折5元 - 2格 */}
                   <path d="M 0 0 L -120 0 A 120 120 0 0 1 -103.92 -60 Z" fill="#FF9800" />
                   <path d="M 0 0 L -103.92 -60 A 120 120 0 0 1 -60 -103.92 Z" fill="#FF9800" />
                   
                   {/* 再送一瓶 - 1格 */}
                   <path d="M 0 0 L -60 -103.92 A 120 120 0 0 1 0 -120 Z" fill="#F44336" />
                   
-                  {/* 文字標籤 */}
-                  <text x="0" y="-80" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(0,0,0,0.8)">折2元</text>
-                  <text x="60" y="-50" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(0,0,0,0.8)">折2元</text>
-                  <text x="80" y="0" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(0,0,0,0.8)">折2元</text>
-                  <text x="60" y="50" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(0,0,0,0.8)">折2元</text>
-                  <text x="0" y="80" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(0,0,0,0.8)">折2元</text>
-                  <text x="-60" y="50" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(0,0,0,0.8)">折2元</text>
-                  <text x="-80" y="0" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(0,0,0,0.8)">折2元</text>
-                  <text x="-60" y="-50" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(0,0,0,0.8)">折2元</text>
-                  <text x="-80" y="-20" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(0,0,0,0.8)">折5元</text>
-                  <text x="-60" y="-80" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(0,0,0,0.8)">折5元</text>
-                  <text x="-20" y="-100" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(0,0,0,0.8)">折5元</text>
-                  <text x="0" y="-100" textAnchor="middle" fill="white" fontSize="10" fontWeight="bold" textShadow="1px 1px 2px rgba(0,0,0,0.8)">再送一瓶</text>
+                  {/* 文字標籤 - 調整位置避免重疊 */}
+                  <text x="0" y="-90" textAnchor="middle" fill="white" fontSize="11" fontWeight="bold" textShadow="2px 2px 4px rgba(0,0,0,0.8)">折2元</text>
+                  <text x="70" y="-60" textAnchor="middle" fill="white" fontSize="11" fontWeight="bold" textShadow="2px 2px 4px rgba(0,0,0,0.8)">折2元</text>
+                  <text x="90" y="-10" textAnchor="middle" fill="white" fontSize="11" fontWeight="bold" textShadow="2px 2px 4px rgba(0,0,0,0.8)">折2元</text>
+                  <text x="70" y="40" textAnchor="middle" fill="white" fontSize="11" fontWeight="bold" textShadow="2px 2px 4px rgba(0,0,0,0.8)">折2元</text>
+                  <text x="0" y="70" textAnchor="middle" fill="white" fontSize="11" fontWeight="bold" textShadow="2px 2px 4px rgba(0,0,0,0.8)">折2元</text>
+                  <text x="-70" y="40" textAnchor="middle" fill="white" fontSize="11" fontWeight="bold" textShadow="2px 2px 4px rgba(0,0,0,0.8)">折2元</text>
+                  <text x="-70" y="-10" textAnchor="middle" fill="white" fontSize="11" fontWeight="bold" textShadow="2px 2px 4px rgba(0,0,0,0.8)">折3元</text>
+                  <text x="-90" y="-20" textAnchor="middle" fill="white" fontSize="11" fontWeight="bold" textShadow="2px 2px 4px rgba(0,0,0,0.8)">折3元</text>
+                  <text x="-70" y="-60" textAnchor="middle" fill="white" fontSize="11" fontWeight="bold" textShadow="2px 2px 4px rgba(0,0,0,0.8)">折3元</text>
+                  <text x="-90" y="-40" textAnchor="middle" fill="white" fontSize="11" fontWeight="bold" textShadow="2px 2px 4px rgba(0,0,0,0.8)">折5元</text>
+                  <text x="-70" y="-80" textAnchor="middle" fill="white" fontSize="11" fontWeight="bold" textShadow="2px 2px 4px rgba(0,0,0,0.8)">折5元</text>
+                  <text x="0" y="-110" textAnchor="middle" fill="white" fontSize="9" fontWeight="bold" textShadow="2px 2px 4px rgba(0,0,0,0.8)">再送一瓶</text>
                 </g>
               </svg>
             </div>
@@ -463,18 +466,26 @@ function GreenLatteRecommender() {
                 <div className="prize-name">{wheelResult.name}</div>
               </div>
               
-              {wheelResult.name === "折5元" && (
-                <div className="prize-details">
-                  <p>🎉 恭喜獲得折5元優惠！</p>
-                  <p>優惠碼：<strong>SAVE5</strong></p>
-                  <p>有效期限：當天，單次使用</p>
-                </div>
-              )}
-              
               {wheelResult.name === "折2元" && (
                 <div className="prize-details">
                   <p>🎉 恭喜獲得折2元優惠！</p>
                   <p>優惠碼：<strong>SAVE2</strong></p>
+                  <p>有效期限：當天，單次使用</p>
+                </div>
+              )}
+              
+              {wheelResult.name === "折3元" && (
+                <div className="prize-details">
+                  <p>🎉 恭喜獲得折3元優惠！</p>
+                  <p>優惠碼：<strong>SAVE3</strong></p>
+                  <p>有效期限：當天，單次使用</p>
+                </div>
+              )}
+              
+              {wheelResult.name === "折5元" && (
+                <div className="prize-details">
+                  <p>🎉 恭喜獲得折5元優惠！</p>
+                  <p>優惠碼：<strong>SAVE5</strong></p>
                   <p>有效期限：當天，單次使用</p>
                 </div>
               )}
