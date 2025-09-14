@@ -5,6 +5,72 @@
   box-sizing: border-box;
 }
 
+/* 運勢卡片樣式 */
+.fortune-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 20px;
+  border-radius: 15px;
+  margin: 20px 0;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.fortune-card h3 {
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+}
+
+.fortune-scores {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.score-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.score-item span:last-child {
+  color: #FFD700;
+  font-size: 1.1rem;
+}
+
+/* AI推薦樣式 */
+.ai-recommendation {
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  color: white;
+  padding: 20px;
+  border-radius: 15px;
+  margin: 15px 0;
+  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+}
+
+.ai-recommendation h3 {
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+.ai-recommendation p {
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* 傳統推薦樣式 */
+.traditional-recommendation {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 15px;
+  margin: 15px 0;
+  border-left: 5px solid #4CAF50;
+}
+
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);

@@ -1,4 +1,4 @@
-const { useState } = React;
+const { useState, useEffect } = React;
 
 function GreenLatteRecommender() {
   const [taste, setTaste] = useState("");
@@ -11,12 +11,76 @@ function GreenLatteRecommender() {
   const [showWheel, setShowWheel] = useState(false);
   const [wheelResult, setWheelResult] = useState(null);
   const [isSpinning, setIsSpinning] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [fortuneData, setFortuneData] = useState(null);
+  const [aiRecommendation, setAiRecommendation] = useState(null);
 
-  const handleSubmit = () => {
-    let recommendation = "";
-    let reason = "";
-    let fruitSuggestion = "";
-    let zodiacMessage = "";
+  // 當星座改變時，自動獲取運勢
+  useEffect(() => {
+    if (zodiac && window.geminiService) {
+      fetchFortuneData();
+    }
+  }, [zodiac]);
+
+  // 獲取運勢數據
+  const fetchFortuneData = async () => {
+    if (!window.geminiService) return;
+    
+    setLoading(true);
+    try {
+      const fortuneText = await window.geminiService.getZodiacFortune(zodiac);
+      if (fortuneText) {
+        const parsedFortune = window.geminiService.parseFortuneText(fortuneText);
+        setFortuneData(parsedFortune);
+      }
+    } catch (error) {
+      console.error('獲取運勢失敗:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 獲取AI推薦
+  const getAiRecommendation = async () => {
+    if (!window.geminiService) return null;
+    
+    try {
+      const userPreferences = {
+        taste,
+        scene,
+        greenLevel,
+        bloodSugar
+      };
+
+      const recommendation = await window.geminiService.getGreenLatteRecommendation(
+        zodiac, 
+        userPreferences
+      );
+      
+      return recommendation;
+    } catch (error) {
+      console.error('AI推薦生成失敗:', error);
+      return null;
+    }
+  };
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    
+    // 嘗試獲取AI推薦
+    let aiRec = null;
+    if (zodiac && window.geminiService) {
+      aiRec = await getAiRecommendation();
+      setAiRecommendation(aiRec);
+    }
+    
+    // 如果AI推薦失敗，使用原有邏輯
+    if (!aiRec) {
+      // 原有邏輯
+      let recommendation = "";
+      let reason = "";
+      let fruitSuggestion = "";
+      let zodiacMessage = "";
 
     // 星座幸運水果分析
     if (zodiac) {
@@ -124,7 +188,7 @@ function GreenLatteRecommender() {
         reason = "水果比例高，口感更甜美、容易入口。";
       } else {
         recommendation = "7:3 系列";
-        reason = "均衡安全，適合大部分情境。";
+        reason = "均衡營養，適合日常飲用。";
       }
     }
 
@@ -138,7 +202,10 @@ function GreenLatteRecommender() {
       reason += " " + zodiacMessage;
     }
 
-    setResult({ recommendation, reason });
+      setResult({ recommendation, reason });
+    }
+    
+    setLoading(false);
   };
 
   const spinWheel = () => {
@@ -149,10 +216,9 @@ function GreenLatteRecommender() {
     
     // 轉盤獎品配置
     const prizes = [
-      { name: "折5元", emoji: "💰", probability: 35 },
-      { name: "折2元", emoji: "💵", probability: 30 },
-      { name: "免費再來一罐", emoji: "🥤", probability: 20 },
-      { name: "下次再努力", emoji: "💪", probability: 15 }
+      { name: "折5元", emoji: "💰", probability: 45 },
+      { name: "折2元", emoji: "💵", probability: 35 },
+      { name: "免費再來一罐", emoji: "🥤", probability: 20 }
     ];
     
     // 模擬轉盤動畫
@@ -178,8 +244,8 @@ function GreenLatteRecommender() {
   return (
     <div className="container">
       <div className="header">
-        <h1>🥬 綠拿鐵推薦小幫手 🥤</h1>
-        <p className="subtitle">找到最適合你的綠拿鐵配方</p>
+        <h1>🥬 果然盈綠拿鐵推薦小幫手 🥤</h1>
+        <p className="subtitle">找到最適合你的綠拿鐵</p>
       </div>
 
       <div className="form-container">
@@ -267,45 +333,63 @@ function GreenLatteRecommender() {
           </select>
         </div>
 
+        {/* 運勢卡片 */}
+        {fortuneData && (
+          <div className="fortune-card">
+            <h3>🔮 {zodiac} 今日運勢</h3>
+            <div className="fortune-scores">
+              <div className="score-item">
+                <span>整體運勢</span>
+                <span>{'⭐'.repeat(fortuneData.scores.overall)}</span>
+              </div>
+              <div className="score-item">
+                <span>愛情運勢</span>
+                <span>{'⭐'.repeat(fortuneData.scores.love)}</span>
+              </div>
+              <div className="score-item">
+                <span>事業運勢</span>
+                <span>{'⭐'.repeat(fortuneData.scores.career)}</span>
+              </div>
+              <div className="score-item">
+                <span>財運</span>
+                <span>{'⭐'.repeat(fortuneData.scores.wealth)}</span>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* 按鈕 */}
         <button
           onClick={handleSubmit}
           className="submit-button"
+          disabled={loading}
         >
-          🎯 取得推薦
+          {loading ? "🔮 AI占星師分析中..." : "🎯 取得AI推薦"}
         </button>
 
         {/* 結果 */}
-        {result && (
+        {(result || aiRecommendation) && (
           <div className="result-container">
             <div className="result-header">
-              <h2>✨ 推薦結果</h2>
+              <h2>✨ AI占星師推薦</h2>
             </div>
             <div className="result-content">
-              <h3 className="recommendation">{result.recommendation}</h3>
-              <p className="reason">{result.reason}</p>
+              {/* AI推薦 */}
+              {aiRecommendation && (
+                <div className="ai-recommendation">
+                  <h3>🔮 AI占星師分析</h3>
+                  <p>{aiRecommendation}</p>
+                </div>
+              )}
               
-              {/* 分享按鈕 */}
-              <div className="share-section">
-                <button 
-                  className="share-button"
-                  onClick={() => {
-                    const shareText = `我剛剛用了綠拿鐵推薦小幫手，推薦我的是：${result.recommendation}！🥬✨`;
-                    if (navigator.share) {
-                      navigator.share({
-                        title: '綠拿鐵推薦小幫手',
-                        text: shareText,
-                        url: window.location.href
-                      });
-                    } else {
-                      navigator.clipboard.writeText(shareText + ' ' + window.location.href);
-                      alert('已複製到剪貼簿！');
-                    }
-                  }}
-                >
-                  📤 分享我的推薦
-                </button>
-              </div>
+              {/* 原有推薦 */}
+              {result && (
+                <div className="traditional-recommendation">
+                  <h3 className="recommendation">{result.recommendation}</h3>
+                  <p className="reason">{result.reason}</p>
+                </div>
+              )}
+              
 
               {/* 每日小貼士 */}
               <div className="daily-tip">
@@ -316,7 +400,7 @@ function GreenLatteRecommender() {
               {/* 每日幸運轉盤 */}
               <div className="wheel-section">
                 <h4>🎰 每日幸運轉盤</h4>
-                <p>完成推薦後，轉轉看你的幸運獎品！</p>
+                <p>轉轉看你的幸運獎品。</p>
                 
                 <button 
                   className={`wheel-button ${isSpinning ? 'spinning' : ''}`}
@@ -337,7 +421,7 @@ function GreenLatteRecommender() {
                       <div className="prize-details">
                         <p>🎉 恭喜獲得折5元優惠！</p>
                         <p>優惠碼：<strong>SAVE5</strong></p>
-                        <p>有效期：7天，單次使用</p>
+                        <p>有效期限：當天，單次使用</p>
                       </div>
                     )}
                     
@@ -345,7 +429,7 @@ function GreenLatteRecommender() {
                       <div className="prize-details">
                         <p>🎉 恭喜獲得折2元優惠！</p>
                         <p>優惠碼：<strong>SAVE2</strong></p>
-                        <p>有效期：7天，單次使用</p>
+                        <p>有效期限：當天，單次使用</p>
                       </div>
                     )}
                     
@@ -353,16 +437,10 @@ function GreenLatteRecommender() {
                       <div className="prize-details">
                         <p>🎉 太幸運了！免費再來一罐！</p>
                         <p>請到店出示此畫面兌換</p>
-                        <p>有效期：3天，單次使用</p>
+                        <p>有效期限：當天，單次使用</p>
                       </div>
                     )}
                     
-                    {wheelResult.name === "下次再努力" && (
-                      <div className="prize-details">
-                        <p>💪 沒關係，明天再來試試！</p>
-                        <p>每天都有一次機會喔！</p>
-                      </div>
-                    )}
                   </div>
                 )}
               </div>
