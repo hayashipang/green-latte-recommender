@@ -124,7 +124,7 @@ function GreenLatteRecommender() {
         reason = "水果比例高，口感更甜美、容易入口。";
       } else {
         recommendation = "7:3 系列";
-        reason = "均衡安全，適合大部分情境。";
+        reason = "均衡營養，適合日常飲用。";
       }
     }
 
@@ -149,10 +149,9 @@ function GreenLatteRecommender() {
     
     // 轉盤獎品配置
     const prizes = [
-      { name: "折5元", emoji: "💰", probability: 35 },
-      { name: "折2元", emoji: "💵", probability: 30 },
-      { name: "免費再來一罐", emoji: "🥤", probability: 20 },
-      { name: "下次再努力", emoji: "💪", probability: 15 }
+      { name: "折5元", emoji: "💰", probability: 45 },
+      { name: "折2元", emoji: "💵", probability: 35 },
+      { name: "免費再來一罐", emoji: "🥤", probability: 20 }
     ];
     
     // 模擬轉盤動畫
@@ -178,8 +177,8 @@ function GreenLatteRecommender() {
   return (
     <div className="container">
       <div className="header">
-        <h1>🥬 綠拿鐵推薦小幫手 🥤</h1>
-        <p className="subtitle">找到最適合你的綠拿鐵配方</p>
+        <h1>🥬 果然盈綠拿鐵推薦小幫手 🥤</h1>
+        <p className="subtitle">找到最適合你的綠拿鐵</p>
       </div>
 
       <div className="form-container">
@@ -285,27 +284,6 @@ function GreenLatteRecommender() {
               <h3 className="recommendation">{result.recommendation}</h3>
               <p className="reason">{result.reason}</p>
               
-              {/* 分享按鈕 */}
-              <div className="share-section">
-                <button 
-                  className="share-button"
-                  onClick={() => {
-                    const shareText = `我剛剛用了綠拿鐵推薦小幫手，推薦我的是：${result.recommendation}！🥬✨`;
-                    if (navigator.share) {
-                      navigator.share({
-                        title: '綠拿鐵推薦小幫手',
-                        text: shareText,
-                        url: window.location.href
-                      });
-                    } else {
-                      navigator.clipboard.writeText(shareText + ' ' + window.location.href);
-                      alert('已複製到剪貼簿！');
-                    }
-                  }}
-                >
-                  📤 分享我的推薦
-                </button>
-              </div>
 
               {/* 每日小貼士 */}
               <div className="daily-tip">
@@ -316,7 +294,7 @@ function GreenLatteRecommender() {
               {/* 每日幸運轉盤 */}
               <div className="wheel-section">
                 <h4>🎰 每日幸運轉盤</h4>
-                <p>完成推薦後，轉轉看你的幸運獎品！</p>
+                <p>轉轉看你的幸運獎品。優惠碼取消。有效期限：當天，單次使用。</p>
                 
                 <button 
                   className={`wheel-button ${isSpinning ? 'spinning' : ''}`}
@@ -357,12 +335,6 @@ function GreenLatteRecommender() {
                       </div>
                     )}
                     
-                    {wheelResult.name === "下次再努力" && (
-                      <div className="prize-details">
-                        <p>💪 沒關係，明天再來試試！</p>
-                        <p>每天都有一次機會喔！</p>
-                      </div>
-                    )}
                   </div>
                 )}
               </div>
