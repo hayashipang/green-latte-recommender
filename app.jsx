@@ -294,7 +294,7 @@ function GreenLatteRecommender() {
               {/* 每日幸運轉盤 */}
               <div className="wheel-section">
                 <h4>🎰 每日幸運轉盤</h4>
-                <p>轉轉看你的幸運獎品。優惠碼取消。有效期限：當天，單次使用。</p>
+                <p>轉轉看你的幸運獎品。</p>
                 
                 <button 
                   className={`wheel-button ${isSpinning ? 'spinning' : ''}`}
@@ -315,7 +315,7 @@ function GreenLatteRecommender() {
                       <div className="prize-details">
                         <p>🎉 恭喜獲得折5元優惠！</p>
                         <p>優惠碼：<strong>SAVE5</strong></p>
-                        <p>有效期：7天，單次使用</p>
+                        <p>有效期限：當天，單次使用</p>
                       </div>
                     )}
                     
@@ -323,7 +323,7 @@ function GreenLatteRecommender() {
                       <div className="prize-details">
                         <p>🎉 恭喜獲得折2元優惠！</p>
                         <p>優惠碼：<strong>SAVE2</strong></p>
-                        <p>有效期：7天，單次使用</p>
+                        <p>有效期限：當天，單次使用</p>
                       </div>
                     )}
                     
@@ -331,7 +331,7 @@ function GreenLatteRecommender() {
                       <div className="prize-details">
                         <p>🎉 太幸運了！免費再來一罐！</p>
                         <p>請到店出示此畫面兌換</p>
-                        <p>有效期：3天，單次使用</p>
+                        <p>有效期限：當天，單次使用</p>
                       </div>
                     )}
                     
