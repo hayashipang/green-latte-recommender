@@ -2,7 +2,7 @@
 class GeminiService {
   constructor() {
     this.apiKey = 'AIzaSyDo2Ffl9V0dhQmj2RPHC70bSVP9zQpjEQg';
-    this.baseUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent";
+    this.baseUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent";
   }
 
   // 獲取星座運勢
@@ -25,6 +25,8 @@ class GeminiService {
 `;
 
     try {
+      console.log('發送 Gemini API 請求:', prompt);
+      
       const response = await fetch(`${this.baseUrl}?key=${this.apiKey}`, {
         method: 'POST',
         headers: {
@@ -45,11 +47,16 @@ class GeminiService {
         })
       });
 
+      console.log('API 回應狀態:', response.status);
+      
       if (!response.ok) {
-        throw new Error(`API請求失敗: ${response.status}`);
+        const errorText = await response.text();
+        console.error('API 錯誤詳情:', errorText);
+        throw new Error(`API請求失敗: ${response.status} - ${errorText}`);
       }
 
       const result = await response.json();
+      console.log('API 回應結果:', result);
       
       if (result.candidates && result.candidates.length > 0) {
         return result.candidates[0].content.parts[0].text;
@@ -58,6 +65,7 @@ class GeminiService {
       }
     } catch (error) {
       console.error('Gemini API錯誤:', error);
+      console.error('錯誤詳情:', error.message);
       return null;
     }
   }

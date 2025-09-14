@@ -8,6 +8,9 @@ function GreenLatteRecommender() {
   const [fruitFlavor, setFruitFlavor] = useState("");
   const [zodiac, setZodiac] = useState("");
   const [result, setResult] = useState(null);
+  const [showWheel, setShowWheel] = useState(false);
+  const [wheelResult, setWheelResult] = useState(null);
+  const [isSpinning, setIsSpinning] = useState(false);
   const [loading, setLoading] = useState(false);
   const [fortuneData, setFortuneData] = useState(null);
   const [aiRecommendation, setAiRecommendation] = useState(null);
@@ -21,20 +24,53 @@ function GreenLatteRecommender() {
 
   // 獲取運勢數據
   const fetchFortuneData = async () => {
-    if (!window.geminiService) return;
+    console.log('開始獲取運勢數據...');
+    console.log('zodiac:', zodiac);
+    console.log('window.geminiService:', window.geminiService);
     
     setLoading(true);
+    
+    // 先嘗試使用模擬數據
     try {
-      const fortuneText = await window.geminiService.getZodiacFortune(zodiac);
-      if (fortuneText) {
-        const parsedFortune = window.geminiService.parseFortuneText(fortuneText);
-        setFortuneData(parsedFortune);
-      }
+      console.log('使用模擬運勢數據...');
+      const mockFortuneData = {
+        scores: {
+          overall: 4,
+          love: 3,
+          career: 4,
+          wealth: 3
+        },
+        averageScore: 3.5,
+        fortuneLevel: 'high',
+        rawText: `${zodiac}今日運勢：整體4星，愛情3星，事業4星，財運3星。幸運水果：芒果。今日建議：保持積極態度。`
+      };
+      
+      setFortuneData(mockFortuneData);
+      console.log('模擬數據設置成功:', mockFortuneData);
+      
     } catch (error) {
-      console.error('獲取運勢失敗:', error);
-    } finally {
-      setLoading(false);
+      console.error('設置模擬數據失敗:', error);
     }
+    
+    // 同時嘗試真實 API
+    if (window.geminiService) {
+      try {
+        console.log('嘗試調用真實 API...');
+        const fortuneText = await window.geminiService.getZodiacFortune(zodiac);
+        console.log('獲得的運勢文本:', fortuneText);
+        
+        if (fortuneText) {
+          console.log('開始解析運勢文本...');
+          const parsedFortune = window.geminiService.parseFortuneText(fortuneText);
+          console.log('解析結果:', parsedFortune);
+          setFortuneData(parsedFortune);
+        }
+      } catch (error) {
+        console.error('真實 API 失敗，使用模擬數據:', error);
+      }
+    }
+    
+    setLoading(false);
   };
 
   // 獲取AI推薦
@@ -205,6 +241,38 @@ function GreenLatteRecommender() {
     setLoading(false);
   };
 
+  const spinWheel = () => {
+    if (isSpinning) return;
+    
+    setIsSpinning(true);
+    setWheelResult(null);
+    
+    // 轉盤獎品配置
+    const prizes = [
+      { name: "折5元", emoji: "💰", probability: 45 },
+      { name: "折2元", emoji: "💵", probability: 35 },
+      { name: "免費再來一罐", emoji: "🥤", probability: 20 }
+    ];
+    
+    // 模擬轉盤動畫
+    setTimeout(() => {
+      // 隨機選擇獎品
+      const random = Math.random() * 100;
+      let cumulativeProbability = 0;
+      let selectedPrize = prizes[0];
+      
+      for (let prize of prizes) {
+        cumulativeProbability += prize.probability;
+        if (random <= cumulativeProbability) {
+          selectedPrize = prize;
+          break;
+        }
+      }
+      
+      setWheelResult(selectedPrize);
+      setIsSpinning(false);
+    }, 2000);
+  };
 
   return (
     <div className="container">
@@ -298,6 +366,36 @@ function GreenLatteRecommender() {
           </select>
         </div>
 
+        {/* 調試信息 */}
+        <div style={{background: '#f0f0f0', padding: '10px', margin: '10px 0', fontSize: '12px'}}>
+          <h4>🔧 調試信息</h4>
+          <p>星座: {zodiac || '未選擇'}</p>
+          <p>GeminiService: {window.geminiService ? '✅ 已載入' : '❌ 未載入'}</p>
+          <p>Loading: {loading ? '🔄 載入中' : '✅ 完成'}</p>
+          <p>FortuneData: {fortuneData ? '✅ 有數據' : '❌ 無數據'}</p>
+          {fortuneData && <pre>{JSON.stringify(fortuneData, null, 2)}</pre>}
+          
+          {/* 手動測試按鈕 */}
+          {zodiac && (
+            <button 
+              onClick={async () => {
+                console.log('手動測試 API...');
+                try {
+                  const result = await window.geminiService.getZodiacFortune(zodiac);
+                  console.log('手動測試結果:', result);
+                  alert('API 測試結果: ' + (result ? '成功' : '失敗'));
+                } catch (error) {
+                  console.error('手動測試錯誤:', error);
+                  alert('API 測試錯誤: ' + error.message);
+                }
+              }}
+              style={{margin: '5px', padding: '5px 10px', fontSize: '12px'}}
+            >
+              🔧 手動測試 API
+            </button>
+          )}
+        </div>
+
         {/* 運勢卡片 */}
         {fortuneData && (
           <div className="fortune-card">
@@ -355,15 +453,63 @@ function GreenLatteRecommender() {
                 </div>
               )}
               
+
               {/* 每日小貼士 */}
               <div className="daily-tip">
                 <h4>💡 今日健康小貼士</h4>
                 <p>綠拿鐵最好在製作後30分鐘內飲用，以保持最佳營養價值！</p>
               </div>
+
+              {/* 每日幸運轉盤 */}
+              <div className="wheel-section">
+                <h4>🎰 每日幸運轉盤</h4>
+                <p>轉轉看你的幸運獎品。</p>
+                
+                <button 
+                  className={`wheel-button ${isSpinning ? 'spinning' : ''}`}
+                  onClick={spinWheel}
+                  disabled={isSpinning}
+                >
+                  {isSpinning ? '🎰 轉轉轉...' : '🎰 轉轉看'}
+                </button>
+
+                {wheelResult && (
+                  <div className="wheel-result">
+                    <div className="prize-display">
+                      <div className="prize-emoji">{wheelResult.emoji}</div>
+                      <div className="prize-name">{wheelResult.name}</div>
+                    </div>
+                    
+                    {wheelResult.name === "折5元" && (
+                      <div className="prize-details">
+                        <p>🎉 恭喜獲得折5元優惠！</p>
+                        <p>優惠碼：<strong>SAVE5</strong></p>
+                        <p>有效期限：當天，單次使用</p>
+                      </div>
+                    )}
+                    
+                    {wheelResult.name === "折2元" && (
+                      <div className="prize-details">
+                        <p>🎉 恭喜獲得折2元優惠！</p>
+                        <p>優惠碼：<strong>SAVE2</strong></p>
+                        <p>有效期限：當天，單次使用</p>
+                      </div>
+                    )}
+                    
+                    {wheelResult.name === "免費再來一罐" && (
+                      <div className="prize-details">
+                        <p>🎉 太幸運了！免費再來一罐！</p>
+                        <p>請到店出示此畫面兌換</p>
+                        <p>有效期限：當天，單次使用</p>
+                      </div>
+                    )}
+                    
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         )}
-
       </div>
     </div>
   );

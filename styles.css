@@ -296,3 +296,126 @@ body {
   }
 }
 
+/* 轉盤樣式 */
+.wheel-section {
+  margin-top: 25px;
+  padding: 20px;
+  background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+  border-radius: 15px;
+  text-align: center;
+}
+
+.wheel-section h4 {
+  color: #e65100;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+.wheel-section p {
+  color: #bf360c;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+}
+
+.wheel-button {
+  background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+}
+
+.wheel-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 152, 0, 0.4);
+}
+
+.wheel-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.wheel-button.spinning {
+  animation: pulse 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.05);
+  }
+}
+
+.wheel-result {
+  margin-top: 20px;
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.prize-display {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+}
+
+.prize-emoji {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  animation: bounce 0.6s ease-out;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+.prize-name {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #e65100;
+  margin-bottom: 10px;
+}
+
+.prize-details {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 15px;
+  border-radius: 10px;
+  border-left: 4px solid #ff9800;
+}
+
+.prize-details p {
+  margin: 5px 0;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.prize-details strong {
+  color: #e65100;
+  font-weight: 700;
+}
