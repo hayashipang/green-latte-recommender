@@ -407,19 +407,43 @@ function GreenLatteRecommender() {
           {/* 轉盤視覺組件 */}
           <div className="wheel-container">
             <div className={`wheel ${isSpinning ? 'spinning' : ''}`}>
-              {/* 12格轉盤 */}
-              <div className="wheel-segment segment-1">折2元</div>
-              <div className="wheel-segment segment-2">折2元</div>
-              <div className="wheel-segment segment-3">折5元</div>
-              <div className="wheel-segment segment-4">折2元</div>
-              <div className="wheel-segment segment-5">折2元</div>
-              <div className="wheel-segment segment-6">折5元</div>
-              <div className="wheel-segment segment-7">折2元</div>
-              <div className="wheel-segment segment-8">折2元</div>
-              <div className="wheel-segment segment-9">折5元</div>
-              <div className="wheel-segment segment-10">折2元</div>
-              <div className="wheel-segment segment-11">折2元</div>
-              <div className="wheel-segment segment-12">再送一瓶</div>
+              {/* 使用SVG創建轉盤 */}
+              <svg width="300" height="300" viewBox="0 0 300 300">
+                {/* 12格扇形 */}
+                <g transform="translate(150,150)">
+                  {/* 折2元 - 8格 */}
+                  <path d="M 0 0 L 0 -120 A 120 120 0 0 1 60 -103.92 Z" fill="#4CAF50" />
+                  <path d="M 0 0 L 60 -103.92 A 120 120 0 0 1 103.92 -60 Z" fill="#4CAF50" />
+                  <path d="M 0 0 L 103.92 -60 A 120 120 0 0 1 120 0 Z" fill="#4CAF50" />
+                  <path d="M 0 0 L 120 0 A 120 120 0 0 1 103.92 60 Z" fill="#4CAF50" />
+                  <path d="M 0 0 L 103.92 60 A 120 120 0 0 1 60 103.92 Z" fill="#4CAF50" />
+                  <path d="M 0 0 L 60 103.92 A 120 120 0 0 1 0 120 Z" fill="#4CAF50" />
+                  <path d="M 0 0 L 0 120 A 120 120 0 0 1 -60 103.92 Z" fill="#4CAF50" />
+                  <path d="M 0 0 L -60 103.92 A 120 120 0 0 1 -103.92 60 Z" fill="#4CAF50" />
+                  
+                  {/* 折5元 - 3格 */}
+                  <path d="M 0 0 L -103.92 60 A 120 120 0 0 1 -120 0 Z" fill="#FF9800" />
+                  <path d="M 0 0 L -120 0 A 120 120 0 0 1 -103.92 -60 Z" fill="#FF9800" />
+                  <path d="M 0 0 L -103.92 -60 A 120 120 0 0 1 -60 -103.92 Z" fill="#FF9800" />
+                  
+                  {/* 再送一瓶 - 1格 */}
+                  <path d="M 0 0 L -60 -103.92 A 120 120 0 0 1 0 -120 Z" fill="#F44336" />
+                  
+                  {/* 文字標籤 */}
+                  <text x="0" y="-80" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(0,0,0,0.8)">折2元</text>
+                  <text x="60" y="-50" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(0,0,0,0.8)">折2元</text>
+                  <text x="80" y="0" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(0,0,0,0.8)">折2元</text>
+                  <text x="60" y="50" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(0,0,0,0.8)">折2元</text>
+                  <text x="0" y="80" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(0,0,0,0.8)">折2元</text>
+                  <text x="-60" y="50" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(0,0,0,0.8)">折2元</text>
+                  <text x="-80" y="0" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(0,0,0,0.8)">折2元</text>
+                  <text x="-60" y="-50" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(0,0,0,0.8)">折2元</text>
+                  <text x="-80" y="-20" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(0,0,0,0.8)">折5元</text>
+                  <text x="-60" y="-80" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(0,0,0,0.8)">折5元</text>
+                  <text x="-20" y="-100" textAnchor="middle" fill="white" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(0,0,0,0.8)">折5元</text>
+                  <text x="0" y="-100" textAnchor="middle" fill="white" fontSize="10" fontWeight="bold" textShadow="1px 1px 2px rgba(0,0,0,0.8)">再送一瓶</text>
+                </g>
+              </svg>
             </div>
             <div className="wheel-pointer"></div>
           </div>
