@@ -390,63 +390,62 @@ function GreenLatteRecommender() {
                 </div>
               )}
               
-
               {/* 每日小貼士 */}
               <div className="daily-tip">
                 <h4>💡 今日健康小貼士</h4>
                 <p>綠拿鐵最好在製作後30分鐘內飲用，以保持最佳營養價值！</p>
               </div>
-
-              {/* 每日幸運轉盤 */}
-              <div className="wheel-section">
-                <h4>🎰 每日幸運轉盤</h4>
-                <p>轉轉看你的幸運獎品。</p>
-                
-                <button 
-                  className={`wheel-button ${isSpinning ? 'spinning' : ''}`}
-                  onClick={spinWheel}
-                  disabled={isSpinning}
-                >
-                  {isSpinning ? '🎰 轉轉轉...' : '🎰 轉轉看'}
-                </button>
-
-                {wheelResult && (
-                  <div className="wheel-result">
-                    <div className="prize-display">
-                      <div className="prize-emoji">{wheelResult.emoji}</div>
-                      <div className="prize-name">{wheelResult.name}</div>
-                    </div>
-                    
-                    {wheelResult.name === "折5元" && (
-                      <div className="prize-details">
-                        <p>🎉 恭喜獲得折5元優惠！</p>
-                        <p>優惠碼：<strong>SAVE5</strong></p>
-                        <p>有效期限：當天，單次使用</p>
-                      </div>
-                    )}
-                    
-                    {wheelResult.name === "折2元" && (
-                      <div className="prize-details">
-                        <p>🎉 恭喜獲得折2元優惠！</p>
-                        <p>優惠碼：<strong>SAVE2</strong></p>
-                        <p>有效期限：當天，單次使用</p>
-                      </div>
-                    )}
-                    
-                    {wheelResult.name === "再送一瓶" && (
-                      <div className="prize-details">
-                        <p>🎉 太幸運了！再送一瓶！</p>
-                        <p>請到店出示此畫面兌換</p>
-                        <p>有效期限：當天，單次使用</p>
-                      </div>
-                    )}
-                    
-                  </div>
-                )}
-              </div>
             </div>
           </div>
         )}
+
+        {/* 每日幸運轉盤 - 始終顯示 */}
+        <div className="wheel-section">
+          <h4>🎰 每日幸運轉盤</h4>
+          <p>轉轉看你的幸運獎品。</p>
+          
+          <button 
+            className={`wheel-button ${isSpinning ? 'spinning' : ''}`}
+            onClick={spinWheel}
+            disabled={isSpinning}
+          >
+            {isSpinning ? '🎰 轉轉轉...' : '🎰 轉轉看'}
+          </button>
+
+          {wheelResult && (
+            <div className="wheel-result">
+              <div className="prize-display">
+                <div className="prize-emoji">{wheelResult.emoji}</div>
+                <div className="prize-name">{wheelResult.name}</div>
+              </div>
+              
+              {wheelResult.name === "折5元" && (
+                <div className="prize-details">
+                  <p>🎉 恭喜獲得折5元優惠！</p>
+                  <p>優惠碼：<strong>SAVE5</strong></p>
+                  <p>有效期限：當天，單次使用</p>
+                </div>
+              )}
+              
+              {wheelResult.name === "折2元" && (
+                <div className="prize-details">
+                  <p>🎉 恭喜獲得折2元優惠！</p>
+                  <p>優惠碼：<strong>SAVE2</strong></p>
+                  <p>有效期限：當天，單次使用</p>
+                </div>
+              )}
+              
+              {wheelResult.name === "再送一瓶" && (
+                <div className="prize-details">
+                  <p>🎉 太幸運了！再送一瓶！</p>
+                  <p>請到店出示此畫面兌換</p>
+                  <p>有效期限：當天，單次使用</p>
+                </div>
+              )}
+              
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
