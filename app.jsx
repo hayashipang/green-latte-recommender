@@ -404,6 +404,26 @@ function GreenLatteRecommender() {
           <h4>🎰 每日幸運轉盤</h4>
           <p>轉轉看你的幸運獎品。</p>
           
+          {/* 轉盤視覺組件 */}
+          <div className="wheel-container">
+            <div className={`wheel ${isSpinning ? 'spinning' : ''}`}>
+              {/* 12格轉盤 */}
+              <div className="wheel-segment segment-1">折2元</div>
+              <div className="wheel-segment segment-2">折2元</div>
+              <div className="wheel-segment segment-3">折5元</div>
+              <div className="wheel-segment segment-4">折2元</div>
+              <div className="wheel-segment segment-5">折2元</div>
+              <div className="wheel-segment segment-6">折5元</div>
+              <div className="wheel-segment segment-7">折2元</div>
+              <div className="wheel-segment segment-8">折2元</div>
+              <div className="wheel-segment segment-9">折5元</div>
+              <div className="wheel-segment segment-10">折2元</div>
+              <div className="wheel-segment segment-11">折2元</div>
+              <div className="wheel-segment segment-12">再送一瓶</div>
+            </div>
+            <div className="wheel-pointer"></div>
+          </div>
+          
           <button 
             className={`wheel-button ${isSpinning ? 'spinning' : ''}`}
             onClick={spinWheel}
