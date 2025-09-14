@@ -413,38 +413,60 @@ function GreenLatteRecommender() {
                 {/* 12格扇形 - 加入邊界線 */}
                 <g transform="translate(150,150)">
                   {/* 折2元 - 6格 */}
-                  <path d="M 0 0 L 0 -120 A 120 120 0 0 1 60 -103.92 Z" fill="#4CAF50" stroke="#333" strokeWidth="2" />
-                  <path d="M 0 0 L 60 -103.92 A 120 120 0 0 1 103.92 -60 Z" fill="#4CAF50" stroke="#333" strokeWidth="2" />
-                  <path d="M 0 0 L 103.92 -60 A 120 120 0 0 1 120 0 Z" fill="#4CAF50" stroke="#333" strokeWidth="2" />
-                  <path d="M 0 0 L 120 0 A 120 120 0 0 1 103.92 60 Z" fill="#4CAF50" stroke="#333" strokeWidth="2" />
-                  <path d="M 0 0 L 103.92 60 A 120 120 0 0 1 60 103.92 Z" fill="#4CAF50" stroke="#333" strokeWidth="2" />
-                  <path d="M 0 0 L 60 103.92 A 120 120 0 0 1 0 120 Z" fill="#4CAF50" stroke="#333" strokeWidth="2" />
+                  <g>
+                    <path d="M 0 0 L 0 -120 A 120 120 0 0 1 60 -103.92 Z" fill="#4CAF50" stroke="#333" strokeWidth="2" />
+                    <text x="0" y="-80" textAnchor="middle" fill="#FF0000" fontSize="11" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折2元</text>
+                  </g>
+                  <g>
+                    <path d="M 0 0 L 60 -103.92 A 120 120 0 0 1 103.92 -60 Z" fill="#4CAF50" stroke="#333" strokeWidth="2" />
+                    <text x="80" y="-50" textAnchor="middle" fill="#FF0000" fontSize="11" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折2元</text>
+                  </g>
+                  <g>
+                    <path d="M 0 0 L 103.92 -60 A 120 120 0 0 1 120 0 Z" fill="#4CAF50" stroke="#333" strokeWidth="2" />
+                    <text x="100" y="0" textAnchor="middle" fill="#FF0000" fontSize="11" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折2元</text>
+                  </g>
+                  <g>
+                    <path d="M 0 0 L 120 0 A 120 120 0 0 1 103.92 60 Z" fill="#4CAF50" stroke="#333" strokeWidth="2" />
+                    <text x="80" y="50" textAnchor="middle" fill="#FF0000" fontSize="11" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折2元</text>
+                  </g>
+                  <g>
+                    <path d="M 0 0 L 103.92 60 A 120 120 0 0 1 60 103.92 Z" fill="#4CAF50" stroke="#333" strokeWidth="2" />
+                    <text x="0" y="80" textAnchor="middle" fill="#FF0000" fontSize="11" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折2元</text>
+                  </g>
+                  <g>
+                    <path d="M 0 0 L 60 103.92 A 120 120 0 0 1 0 120 Z" fill="#4CAF50" stroke="#333" strokeWidth="2" />
+                    <text x="-80" y="50" textAnchor="middle" fill="#FF0000" fontSize="11" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折2元</text>
+                  </g>
                   
                   {/* 折3元 - 3格 */}
-                  <path d="M 0 0 L 0 120 A 120 120 0 0 1 -60 103.92 Z" fill="#2196F3" stroke="#333" strokeWidth="2" />
-                  <path d="M 0 0 L -60 103.92 A 120 120 0 0 1 -103.92 60 Z" fill="#2196F3" stroke="#333" strokeWidth="2" />
-                  <path d="M 0 0 L -103.92 60 A 120 120 0 0 1 -120 0 Z" fill="#2196F3" stroke="#333" strokeWidth="2" />
+                  <g>
+                    <path d="M 0 0 L 0 120 A 120 120 0 0 1 -60 103.92 Z" fill="#2196F3" stroke="#333" strokeWidth="2" />
+                    <text x="-80" y="0" textAnchor="middle" fill="#FF0000" fontSize="11" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折3元</text>
+                  </g>
+                  <g>
+                    <path d="M 0 0 L -60 103.92 A 120 120 0 0 1 -103.92 60 Z" fill="#2196F3" stroke="#333" strokeWidth="2" />
+                    <text x="-100" y="-20" textAnchor="middle" fill="#FF0000" fontSize="11" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折3元</text>
+                  </g>
+                  <g>
+                    <path d="M 0 0 L -103.92 60 A 120 120 0 0 1 -120 0 Z" fill="#2196F3" stroke="#333" strokeWidth="2" />
+                    <text x="-100" y="-50" textAnchor="middle" fill="#FF0000" fontSize="11" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折3元</text>
+                  </g>
                   
                   {/* 折5元 - 2格 */}
-                  <path d="M 0 0 L -120 0 A 120 120 0 0 1 -103.92 -60 Z" fill="#FF9800" stroke="#333" strokeWidth="2" />
-                  <path d="M 0 0 L -103.92 -60 A 120 120 0 0 1 -60 -103.92 Z" fill="#FF9800" stroke="#333" strokeWidth="2" />
+                  <g>
+                    <path d="M 0 0 L -120 0 A 120 120 0 0 1 -103.92 -60 Z" fill="#FF9800" stroke="#333" strokeWidth="2" />
+                    <text x="-100" y="-80" textAnchor="middle" fill="#FF0000" fontSize="11" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折5元</text>
+                  </g>
+                  <g>
+                    <path d="M 0 0 L -103.92 -60 A 120 120 0 0 1 -60 -103.92 Z" fill="#FF9800" stroke="#333" strokeWidth="2" />
+                    <text x="-80" y="-100" textAnchor="middle" fill="#FF0000" fontSize="11" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折5元</text>
+                  </g>
                   
                   {/* 再送一瓶 - 1格 */}
-                  <path d="M 0 0 L -60 -103.92 A 120 120 0 0 1 0 -120 Z" fill="#F44336" stroke="#333" strokeWidth="2" />
-                  
-                  {/* 文字標籤 - 使用紅字樣式 */}
-                  <text x="0" y="-85" textAnchor="middle" fill="#FF0000" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折2元</text>
-                  <text x="70" y="-55" textAnchor="middle" fill="#FF0000" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折2元</text>
-                  <text x="90" y="-5" textAnchor="middle" fill="#FF0000" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折2元</text>
-                  <text x="70" y="45" textAnchor="middle" fill="#FF0000" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折2元</text>
-                  <text x="0" y="75" textAnchor="middle" fill="#FF0000" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折2元</text>
-                  <text x="-70" y="45" textAnchor="middle" fill="#FF0000" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折2元</text>
-                  <text x="-70" y="-5" textAnchor="middle" fill="#FF0000" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折3元</text>
-                  <text x="-90" y="-15" textAnchor="middle" fill="#FF0000" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折3元</text>
-                  <text x="-70" y="-55" textAnchor="middle" fill="#FF0000" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折3元</text>
-                  <text x="-90" y="-35" textAnchor="middle" fill="#FF0000" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折5元</text>
-                  <text x="-70" y="-75" textAnchor="middle" fill="#FF0000" fontSize="12" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">折5元</text>
-                  <text x="0" y="-105" textAnchor="middle" fill="#FF0000" fontSize="10" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">再送一瓶</text>
+                  <g>
+                    <path d="M 0 0 L -60 -103.92 A 120 120 0 0 1 0 -120 Z" fill="#F44336" stroke="#333" strokeWidth="2" />
+                    <text x="0" y="-100" textAnchor="middle" fill="#FF0000" fontSize="9" fontWeight="bold" textShadow="1px 1px 2px rgba(255,255,255,0.8)">再送一瓶</text>
+                  </g>
                 </g>
               </svg>
             </div>
