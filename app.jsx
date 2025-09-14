@@ -24,15 +24,11 @@ function GreenLatteRecommender() {
 
   // 獲取運勢數據
   const fetchFortuneData = async () => {
-    console.log('開始獲取運勢數據...');
-    console.log('zodiac:', zodiac);
-    console.log('window.geminiService:', window.geminiService);
     
     setLoading(true);
     
     // 先嘗試使用模擬數據
     try {
-      console.log('使用模擬運勢數據...');
       const mockFortuneData = {
         scores: {
           overall: 4,
@@ -46,7 +42,6 @@ function GreenLatteRecommender() {
       };
       
       setFortuneData(mockFortuneData);
-      console.log('模擬數據設置成功:', mockFortuneData);
       
     } catch (error) {
       console.error('設置模擬數據失敗:', error);
@@ -55,14 +50,10 @@ function GreenLatteRecommender() {
     // 同時嘗試真實 API
     if (window.geminiService) {
       try {
-        console.log('嘗試調用真實 API...');
         const fortuneText = await window.geminiService.getZodiacFortune(zodiac);
-        console.log('獲得的運勢文本:', fortuneText);
         
         if (fortuneText) {
-          console.log('開始解析運勢文本...');
           const parsedFortune = window.geminiService.parseFortuneText(fortuneText);
-          console.log('解析結果:', parsedFortune);
           setFortuneData(parsedFortune);
         }
       } catch (error) {
@@ -366,35 +357,6 @@ function GreenLatteRecommender() {
           </select>
         </div>
 
-        {/* 調試信息 */}
-        <div style={{background: '#f0f0f0', padding: '10px', margin: '10px 0', fontSize: '12px'}}>
-          <h4>🔧 調試信息</h4>
-          <p>星座: {zodiac || '未選擇'}</p>
-          <p>GeminiService: {window.geminiService ? '✅ 已載入' : '❌ 未載入'}</p>
-          <p>Loading: {loading ? '🔄 載入中' : '✅ 完成'}</p>
-          <p>FortuneData: {fortuneData ? '✅ 有數據' : '❌ 無數據'}</p>
-          {fortuneData && <pre>{JSON.stringify(fortuneData, null, 2)}</pre>}
-          
-          {/* 手動測試按鈕 */}
-          {zodiac && (
-            <button 
-              onClick={async () => {
-                console.log('手動測試 API...');
-                try {
-                  const result = await window.geminiService.getZodiacFortune(zodiac);
-                  console.log('手動測試結果:', result);
-                  alert('API 測試結果: ' + (result ? '成功' : '失敗'));
-                } catch (error) {
-                  console.error('手動測試錯誤:', error);
-                  alert('API 測試錯誤: ' + error.message);
-                }
-              }}
-              style={{margin: '5px', padding: '5px 10px', fontSize: '12px'}}
-            >
-              🔧 手動測試 API
-            </button>
-          )}
-        </div>
 
         {/* 運勢卡片 */}
         {fortuneData && (
